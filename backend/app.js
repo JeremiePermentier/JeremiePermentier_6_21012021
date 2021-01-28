@@ -4,18 +4,21 @@ const express = require('express');
 // Importation de body-parser
 const bodyParser = require('body-parser');
 
+// Importation de .env
+require("dotenv").config();
+
 // Importation de mongoose pour la base de données
 const mongoose = require('mongoose');
 
-
+const path = require('path');
 
 
 // Accès au dossiers routes
-const userRoutes = require('./routes/user');
 const saucesRoutes = require('./routes/sauces');
+const userRoutes = require('./routes/user');
 
 //connection à la base de données
-mongoose.connect('mongodb+srv://Jeremie:projet6@cluster0.fl7vn.mongodb.net/<dbname>?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@cluster0.fl7vn.mongodb.net/<dbname>?retryWrites=true&w=majority',
 { useNewUrlParser: true,
 useUnifiedTopology: true})
 .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -32,6 +35,8 @@ app.use((req, res, next) => {
   });
 
 app.use(bodyParser.json());
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 app.use('/api/sauces', saucesRoutes);
