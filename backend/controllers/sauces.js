@@ -1,8 +1,9 @@
-
+// Importation des dépendances et du models
 const Sauce = require('../models/Sauces');
 const fs = require('fs');
 const { connection } = require('mongoose');
 
+//Reçois la requête pour la création de sauce
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -15,6 +16,7 @@ exports.createSauce = (req, res, next) => {
     .catch(error =>res.status(400).json({ error }))
   };
 
+//Reçois la requête pour la modification de la sauce
 exports.modifySauce = (req, res, next) => {
   const sauceObject = req.file ?
   {
@@ -26,6 +28,7 @@ exports.modifySauce = (req, res, next) => {
   .catch(error => res.status(400).json({ error }));
 };
   
+//Reçois la requête pour le like ou le dislike
 exports.likeSauce = (req, res, next) => {
 
     Sauce.findOne({ _id: req.params.id })
@@ -72,6 +75,7 @@ exports.likeSauce = (req, res, next) => {
     })
     
 }
+//Reçois la requête pour la suppression de la sauce
 exports.deleteSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
   .then(sauce => {
@@ -84,13 +88,13 @@ exports.deleteSauce = (req, res, next) => {
   })
   .catch(error => res.status(500).json({ error }));
 };
-
+//Reçois la requête pour obtenir toutes les sauces
 exports.allGetSauces = (req, res, next) => {
   Sauce.find()
   .then(sauces => res.status(200).json(sauces))
   .catch(error => res.status(400).json(error));
 };
-
+//Reçois la requête pour récupérer seulement une sauce
 exports.getOneThing = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id})
   .then(sauce => res.status(200).json(sauce))

@@ -1,5 +1,15 @@
 // Importation de express pour créer l'api
 const express = require('express');
+// Importation de Helmet
+const helmet = require('helmet');
+// Importation de express-rate-limit
+const rateLimit = require('express-rate-limit');
+
+// Création d'un limiteur d'authentification
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 100, 
+  max: 3
+});
 
 // Importation de body-parser
 const bodyParser = require('body-parser');
@@ -10,6 +20,9 @@ require("dotenv").config();
 // Importation de mongoose pour la base de données
 const mongoose = require('mongoose');
 
+
+
+// Gestion de chemin pour les images
 const path = require('path');
 
 
@@ -26,21 +39,24 @@ useUnifiedTopology: true})
 
 const app = express();
 
+
 // Permet le connection avec deux serveur différent
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     next();
   });
 
+
+app.use(helmet());
 app.use(bodyParser.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 app.use('/api/sauces', saucesRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/auth', limiter, userRoutes);
 
 
 module.exports = app;

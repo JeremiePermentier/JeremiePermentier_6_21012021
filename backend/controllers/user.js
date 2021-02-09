@@ -1,7 +1,9 @@
+// Importation des dépendances et du models
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+//Reçois la requête d'inscription
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -16,6 +18,8 @@ exports.signup = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+
+//Reçois la requête de connexion
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
     .then(user => {
