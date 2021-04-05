@@ -5,11 +5,11 @@ const helmet = require('helmet');
 // Importation de express-rate-limit
 const rateLimit = require('express-rate-limit');
 
-// Création d'un limiteur d'authentification
-const limiter = rateLimit({
-  windowMs: 10 * 60 * 100, 
-  max: 3
-});
+// // Création d'un limiteur d'authentification
+// const limiter = rateLimit({
+//   windowMs: 10 * 60 * 100, 
+//   max: 3
+// });
 
 // Importation de body-parser
 const bodyParser = require('body-parser');
@@ -31,7 +31,7 @@ const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
 //connection à la base de données
-mongoose.connect('mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@cluster0.fl7vn.mongodb.net/<dbname>?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://Jeremie:projet6@cluster0.fl7vn.mongodb.net/<dbname>?retryWrites=true&w=majority',
 { useNewUrlParser: true,
 useUnifiedTopology: true})
 .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -56,7 +56,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 app.use('/api/sauces', saucesRoutes);
-app.use('/api/auth', limiter, userRoutes);
+app.use('/api/auth', userRoutes);
 
 
 module.exports = app;

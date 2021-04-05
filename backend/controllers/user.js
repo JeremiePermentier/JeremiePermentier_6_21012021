@@ -4,16 +4,23 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 //Reçois la requête d'inscription
-exports.signup = (req, res, next) => {
-    bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-        const user = new User({
-            email: req.body.email,
-            password: hash
-        })
-        user.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => res.status(400).json({ error }));
+exports.signup = async (req, res, next) => {
+    
+    User.findOne({ email: req.body.email })
+    .then((userFound) => {
+        if (userFound === null){
+            bcrypt.hash(req.body.password, 10)
+            .then(hash => {
+                const user = new User({
+                    email: req.body.email,
+                    password: hash
+                })
+                user.save()
+                .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+            }) 
+        } else {
+            res.status(400).json({ error: "l'email est déjà utilisée" });
+        }
     })
     .catch(error => res.status(500).json({ error }));
 };
