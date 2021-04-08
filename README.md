@@ -24,4 +24,4 @@ Permet d'installer les packages nécessaires.
 
 ## 3 - ng serve
 
-Cette commande permet de lancer le serveur pour le frontend https://localhost:4200
+Cette commande permet de lancer le serveur pour le frontend https://localhost:4200/

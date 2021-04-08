@@ -4,10 +4,11 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 //Reçois la requête d'inscription
-exports.signup = async (req, res, next) => {
+exports.signup = (req, res, next) => {
+
     
     User.findOne({ email: req.body.email })
-    .then((userFound) => {
+    .then(userFound => {
         if (userFound === null){
             bcrypt.hash(req.body.password, 10)
             .then(hash => {
