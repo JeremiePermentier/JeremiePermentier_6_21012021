@@ -18,7 +18,7 @@ exports.valid = (req, res, next) => {
         });
     } else if (!schema.validate(req.body.password)){
         return res.status(400).send({
-          error: "Vérifier votre mot de passe, il doit contenir un minimum de 10 caractères avec des minuscules et majuscules et sans espace."
+          error: "Vérifier votre mot de passe, il doit contenir un minimum de 10 caractères avec des minuscules et majuscules et sans espace et au minimun un chiffre."
       });
     } else if (
         emailValidator.validate(req.body.email) ||

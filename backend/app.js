@@ -2,14 +2,6 @@
 const express = require('express');
 // Importation de Helmet
 const helmet = require('helmet');
-// Importation de express-rate-limit
-const rateLimit = require('express-rate-limit');
-
-// // Création d'un limiteur d'authentification
-// const limiter = rateLimit({
-//   windowMs: 10 * 60 * 100, 
-//   max: 3
-// });
 
 // Importation de body-parser
 const bodyParser = require('body-parser');
