@@ -23,7 +23,7 @@ const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
 //connection à la base de données
-mongoose.connect('mongodb+srv://Jerem:projet6@cluster0.fl7vn.mongodb.net/<dbname>?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${process.env.USER_MONGO}:${process.env.PASSWORD}@cluster0.fl7vn.mongodb.net/<dbname>?retryWrites=true&w=majority`,
 { useNewUrlParser: true,
 useUnifiedTopology: true})
 .then(() => console.log('Connexion à MongoDB réussie !'))
