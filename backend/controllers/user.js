@@ -9,7 +9,7 @@ exports.signup = (req, res, next) => {
 
     const cryptedEmail = cryptojs.HmacSHA256(req.body.email, 'secret').toString();
 
-    User.findOne({ email: req.body.email })
+    User.findOne({ email: cryptedEmail })
     .then(userFound => {
         if (userFound === null){
             bcrypt.hash(req.body.password, 10)
